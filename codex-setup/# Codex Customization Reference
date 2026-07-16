@@ -1,0 +1,577 @@
+# Codex Customization Reference
+
+This is a practical reference for customizing Codex for personal work, one repository, or a shared team workflow. It covers instructions, skills, custom agents, MCP servers, plugins, hooks, and configuration.
+
+## 1. The mental model
+
+Codex customization is a set of complementary layers. Do not force every need into one file.
+
+| Need | Use | Why |
+| --- | --- | --- |
+| One temporary instruction | The current prompt/task | It should disappear after the task. |
+| Rules that apply whenever Codex works in a repository | `AGENTS.md` | Durable repository guidance: commands, conventions, review expectations. |
+| A reusable workflow | A skill | Supports an on-demand workflow with instructions, references, scripts, and assets. |
+| A specialized parallel worker | A custom agent / subagent | Gives a spawned agent a defined role, model, tool surface, and instructions. |
+| Live access to an external system | MCP | Connects Codex to tools and context outside the repository. |
+| A distributable package of skills, MCP/app wiring, hooks, and assets | A plugin | The installable/sharable unit. |
+| Deterministic enforcement at a lifecycle point | A hook plus normal project tooling | Use for mechanical checks, not general advice. |
+| Default model, sandbox, MCP, hook, or agent settings | `config.toml` | Configuration rather than workflow guidance. |
+| Helpful learned context from prior work | Memories | Personal context; do not use it as a source-controlled policy. |
+
+**Rule of thumb:** `AGENTS.md` shapes normal behavior, skills package repeatable procedures, custom agents split specialized work, MCP connects outside systems, and plugins distribute a reusable bundle.
+
+## 2. Scope and precedence
+
+There are three useful scopes.
+
+| Scope | Use it for | Typical location |
+| --- | --- | --- |
+| Personal | Your preferences and reusable workflows across repositories | `~/.codex/`, `~/.agents/` |
+| Project | Codebase and team-specific behavior; commit it to Git | Repository root and its subdirectories |
+| Plugin / team distribution | Reuse across many projects or teammates | A plugin repository plus a marketplace entry |
+
+`~` means the home directory of the environment running Codex.
+
+- In Windows Codex, it is normally your Windows user home, for example `C:\Users\Khaled Ragab`.
+- In VS Code Remote - WSL, it is the Linux user home inside that WSL distribution, for example `/home/khaled`.
+- A Windows Codex profile and a WSL Codex profile can therefore have different global files. For shared project behavior, keep files in the repository.
+
+### `AGENTS.md` precedence
+
+Codex builds an instruction chain at the start of a run:
+
+1. In Codex Home, it reads `AGENTS.override.md` when present; otherwise it reads `AGENTS.md`.
+2. Starting at the repository root, it walks down to the current working directory.
+3. In each directory, it prefers `AGENTS.override.md`, then `AGENTS.md`.
+4. Files closer to the current working directory appear later and therefore override broader guidance.
+
+Keep `AGENTS.md` files short. The default combined instruction limit is 32 KiB.
+
+## 3. Personal developer setup
+
+Use this when you want consistent personal defaults across all repositories.
+
+```text
+~/.codex/
+  AGENTS.md                         # Personal coding preferences
+  AGENTS.override.md                # Optional temporary global override
+  config.toml                       # Global configuration: MCP, model, sandbox, hooks, agents
+  agents/
+    reviewer.toml                   # Personal custom agent
+    explorer.toml                   # Personal custom agent
+  plugins/
+    my-team-tools/                  # Installed or locally developed plugin
+
+~/.agents/
+  skills/
+    human-crafted-frontend-design/
+      SKILL.md                       # Personal skill, available across repositories
+  plugins/
+    marketplace.json                 # Personal plugin marketplace catalog
+```
+
+Use personal scope for preferences such as response style, your preferred package manager, a generic release-check workflow, or a personal code-review agent.
+
+Do not store team-only rules, private project schemas, or repository-specific commands in your personal global files.
+
+### Minimal global `AGENTS.md`
+
+```md
+# Working Agreements
+
+- Prefer the package manager already used by the repository.
+- Run the relevant tests before declaring a code change complete.
+- Do not add production dependencies without explaining why.
+- Never commit secrets, credentials, or `.env` files.
+```
+
+## 4. Recommended project structure
+
+Start with only the folders you actually need.
+
+```text
+my-app/
+  AGENTS.md                         # Repository rules and commands
+  .agents/
+    skills/
+      human-crafted-frontend-design/
+        SKILL.md                     # Project-specific skill
+    plugins/
+      marketplace.json               # Only when the repo exposes local plugins
+  .codex/
+    config.toml                      # Trusted project settings, if needed
+    agents/
+      reviewer.toml                  # Project-specific custom agent
+      pr-explorer.toml               # Project-specific custom agent
+  plugins/
+    project-workflows/               # Only when authoring a local plugin
+      .codex-plugin/
+        plugin.json
+      skills/
+        release-check/
+          SKILL.md
+  src/
+  tests/
+  package.json
+```
+
+For a small application, this is often enough:
+
+```text
+my-app/
+  AGENTS.md
+  .agents/
+    skills/
+      human-crafted-frontend-design/
+        SKILL.md
+  src/
+  tests/
+```
+
+Add `.codex/config.toml`, custom agents, MCP, or plugins only when the problem calls for them.
+
+## 5. `AGENTS.md`: durable repository guidance
+
+`AGENTS.md` is plain Markdown. It is read before work begins; it is not a selectable skill and it needs no YAML frontmatter.
+
+### Put these things in `AGENTS.md`
+
+- Install, build, lint, test, and local development commands.
+- Project architecture and directory conventions.
+- Code review expectations.
+- Security boundaries and generated-file restrictions.
+- Repeated corrections you give Codex.
+- Routing hints, such as which directory or document to inspect first.
+
+### Do not put these things in `AGENTS.md`
+
+- A one-off task request.
+- Long API schemas or large reference documents.
+- Secrets.
+- A large optional workflow that only applies sometimes. Make that a skill instead.
+
+### Project-level example
+
+```md
+# Repository Guidance
+
+## Commands
+
+- Install: `pnpm install`
+- Develop: `pnpm dev`
+- Lint: `pnpm lint`
+- Test: `pnpm test`
+- Build: `pnpm build`
+
+## Working Rules
+
+- Reuse existing components and utilities before introducing a dependency.
+- Keep API validation in `src/lib/validation`.
+- Do not expose server environment variables to client code.
+- Add or update tests when shared behavior changes.
+
+## Boundaries
+
+- Do not edit `src/generated` manually.
+- Do not commit `.env` files or credentials.
+```
+
+### Nested specialization
+
+Use a nested file when rules change for one part of a monorepo.
+
+```text
+my-app/
+  AGENTS.md
+  services/
+    payments/
+      AGENTS.override.md
+```
+
+The nested override has priority when Codex works from `services/payments/`. It replaces an `AGENTS.md` in that same directory, while still layering over root and global guidance.
+
+## 6. Skills: reusable workflows
+
+A skill is a folder that gives Codex a reusable procedure, domain expertise, helper scripts, references, or output assets.
+
+Use a skill for work such as:
+
+- Building a frontend using your design standards.
+- Preparing a release.
+- Reviewing API changes.
+- Updating documentation from a defined source.
+- Generating a project-specific report.
+
+### Skill scope and locations
+
+```text
+# Personal skill
+~/.agents/skills/<skill-name>/SKILL.md
+
+# Repository skill
+<repo>/.agents/skills/<skill-name>/SKILL.md
+```
+
+Important: current Codex documentation places **personal user skills** in `~/.agents/skills`, while `~/.codex` is used for Codex Home configuration, global guidance, custom agents, and plugins. Do not put custom work inside a managed `.system` skill folder.
+
+### Skill file structure
+
+```text
+human-crafted-frontend-design/
+  SKILL.md                           # Required
+  agents/
+    openai.yaml                      # Optional UI metadata
+  scripts/
+    check-ui.ps1                     # Optional deterministic helper
+  references/
+    product-rules.md                 # Optional detailed material
+  assets/
+    starter-template/                # Optional output resources
+```
+
+Each skill gets its own folder and one required file named exactly `SKILL.md`. Do not combine unrelated skills into one giant Markdown file.
+
+### Required `SKILL.md` format
+
+```md
+---
+name: skill-name
+description: Explain exactly what the skill does and the tasks that should trigger it.
+---
+
+# Workflow
+
+1. Inspect the relevant project guidance.
+2. Follow the defined procedure.
+3. Run the required verification.
+4. Report the result and remaining risks.
+```
+
+Rules for the frontmatter:
+
+- `name` is lowercase, uses letters, digits, and hyphens only, and matches the folder name.
+- `description` is the trigger mechanism. Put all "when to use" information there.
+- Use only `name` and `description` in the required frontmatter.
+
+### How skills control context
+
+Skills use progressive disclosure:
+
+1. Codex sees each skill's `name` and `description` for discovery.
+2. Codex loads the `SKILL.md` body only after selecting the skill.
+3. Codex reads references or runs scripts only when needed.
+
+Keep the main `SKILL.md` concise. Put large schemas, API documents, and long examples in `references/`; put repeatable mechanical work in tested scripts.
+
+### Explicit versus automatic use
+
+- Invoke a skill explicitly from the skills UI or slash menu when available.
+- Ask for it by name, for example: "Use `human-crafted-frontend-design` to redesign this page."
+- Codex can also choose a skill implicitly when the task matches its `description`.
+
+If a skill is not detected, check the folder location, exact filename `SKILL.md`, YAML frontmatter, current host (Windows versus WSL), and restart or start a new task.
+
+### Converting a Markdown specification into a skill
+
+An ordinary Markdown document is not auto-discovered as a skill. Add the frontmatter, place it in the correct folder, and keep the existing content as the body. For example:
+
+```md
+---
+name: human-crafted-frontend-design
+description: Create or improve premium, calm, readable, product-first web interfaces. Use for new frontend screens, app shells, dashboards, design systems, responsive layouts, and UI redesigns.
+---
+
+# Purpose
+
+Generate frontend UI directions and implementation guidance for modern web apps.
+
+# Required Output
+
+- UI direction.
+- Layout structure.
+- Component recommendations.
+- Typography and spacing systems.
+- Color and motion rules.
+- Empty, loading, and error state guidance.
+```
+
+Use `$skill-creator` when you want Codex to scaffold a new skill, generate optional UI metadata, and validate its structure. Use Record & Replay when the workflow is easier to demonstrate than describe.
+
+## 7. Custom agents and subagents
+
+There are two related concepts:
+
+- A **subagent workflow**: Codex spawns focused agents in parallel and collects summaries into the main task.
+- A **custom agent**: a reusable configuration for a kind of subagent, with a name, role, instructions, and optional model, reasoning, sandbox, skills, and MCP settings.
+
+Use subagents for independent, mostly read-heavy work: exploration, test analysis, log triage, documentation verification, or parallel code review. Be careful with parallel writes because concurrent edits increase conflicts and coordination cost.
+
+Subagents reduce noise in the main task by returning summaries, but they do **not** reduce total model cost automatically. Each subagent does its own tool and model work.
+
+### Custom agent locations
+
+```text
+# Personal custom agents
+~/.codex/agents/<agent-name>.toml
+
+# Repository custom agents
+<repo>/.codex/agents/<agent-name>.toml
+```
+
+Each TOML file defines one agent. Required fields are `name`, `description`, and `developer_instructions`.
+
+### Minimal custom agent
+
+```toml
+name = "reviewer"
+description = "PR reviewer focused on correctness, security, behavior regressions, and missing tests."
+developer_instructions = """
+Review code like an owner.
+Prioritize correctness, security, behavior regressions, and missing test coverage.
+Lead with concrete findings and avoid style-only comments unless they hide a real bug.
+"""
+```
+
+### Read-only project explorer
+
+```toml
+name = "pr-explorer"
+description = "Read-only codebase explorer that gathers evidence before changes are proposed."
+model = "gpt-5.6-terra"
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+developer_instructions = """
+Stay in exploration mode.
+Trace real execution paths, cite files and symbols, and do not make changes.
+Prefer targeted search and file reads over broad scans.
+"""
+```
+
+Optional custom-agent fields include `nickname_candidates`, `model`, `model_reasoning_effort`, `sandbox_mode`, `mcp_servers`, and `skills.config`. Omitted settings inherit from the parent task.
+
+### Requesting agents in a task
+
+```text
+Review this branch against main. Spawn three agents in parallel:
+1. An explorer to map affected code paths.
+2. A reviewer to find bugs, security issues, and missing tests.
+3. A docs researcher to verify framework APIs.
+Wait for all three and return a concise summary with file references.
+```
+
+Project guidance and skills can also tell Codex when to delegate, but use that sparingly. Good custom agents are narrow and opinionated.
+
+## 8. MCP: external tools and context
+
+MCP stands for Model Context Protocol. It connects Codex to external tools and data providers, such as Figma, GitHub, Linear, browser tooling, documentation, Sentry, internal services, or a company knowledge system.
+
+An MCP server can expose:
+
+- **Tools**: actions, such as creating an issue or querying a service.
+- **Resources**: readable external data.
+- **Prompts**: reusable prompt templates.
+
+Use MCP when the required capability or information exists outside the local repository. Do not create an MCP server just to store static instructions; use a skill or reference file for that.
+
+### MCP scope
+
+```text
+# Global MCP configuration
+~/.codex/config.toml
+
+# Project MCP configuration; use only for a trusted project
+<repo>/.codex/config.toml
+```
+
+The ChatGPT desktop app, Codex CLI, and IDE extension share MCP configuration when they use the same Codex host. A VS Code Remote - WSL session uses the WSL host, which can have a different `~/.codex/config.toml` from Windows.
+
+### MCP configuration examples
+
+STDIO server:
+
+```toml
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+env_vars = ["LOCAL_TOKEN"]
+```
+
+Remote HTTP server:
+
+```toml
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
+bearer_token_env_var = "FIGMA_OAUTH_TOKEN"
+enabled_tools = ["get_file", "get_nodes"]
+default_tools_approval_mode = "prompt"
+```
+
+Never paste API tokens directly into a repository `config.toml`. Reference environment variable names, use OAuth when available, and only enable the tools the workflow actually needs.
+
+### Best pairing: skill + MCP
+
+Use a skill to define the procedure and MCP to provide the live capability.
+
+```text
+Skill: "Turn approved Figma designs into code"
+  -> inspect the selected design
+  -> use the Figma MCP tools
+  -> follow repository design rules
+  -> implement and verify the page
+```
+
+## 9. Plugins: installable distribution packages
+
+A plugin is for distribution, not the first thing to build. Start with a local skill while iterating. Build a plugin when you need to share a stable workflow across teams, bundle skills with connectors/MCP configuration, package hooks, or publish a reusable package.
+
+A plugin can contain skills, an MCP-backed app, or both.
+
+### Minimal plugin structure
+
+```text
+my-first-plugin/
+  .codex-plugin/
+    plugin.json
+  skills/
+    hello/
+      SKILL.md
+```
+
+`my-first-plugin/.codex-plugin/plugin.json`:
+
+```json
+{
+  "name": "my-first-plugin",
+  "version": "1.0.0",
+  "description": "Reusable workflow package",
+  "skills": "./skills/"
+}
+```
+
+Use a stable kebab-case plugin name. The plugin manifest is required.
+
+### Personal and repository plugin marketplaces
+
+```text
+# Repository marketplace and local plugin storage
+<repo>/.agents/plugins/marketplace.json
+<repo>/plugins/<plugin-name>/
+
+# Personal marketplace and local plugin storage
+~/.agents/plugins/marketplace.json
+~/.codex/plugins/<plugin-name>/
+```
+
+Use `$plugin-creator` to scaffold the plugin, its `.codex-plugin/plugin.json`, and a personal marketplace entry. Use a plugin only after the skill/workflow has proven itself in real tasks.
+
+## 10. `config.toml`: settings, not instructions
+
+Use `config.toml` for Codex settings such as model defaults, sandbox behavior, MCP servers, hooks, and agent limits. Do not use it as a replacement for `AGENTS.md` or a skill.
+
+```text
+# Personal
+~/.codex/config.toml
+
+# Trusted project
+<repo>/.codex/config.toml
+```
+
+Example agent limits:
+
+```toml
+[agents]
+max_threads = 4
+max_depth = 1
+```
+
+`max_depth = 1` lets the main task spawn direct child agents without allowing unlimited recursive delegation. Keep it low unless you have a clear reason to increase it.
+
+## 11. Hooks and ordinary enforcement tools
+
+Use a hook for an action that must happen reliably at a lifecycle point around tool calls, commands, or edits. Examples include recording an audit event or blocking a forbidden command.
+
+Prefer normal engineering enforcement for normal engineering rules:
+
+- Formatter for formatting.
+- Linter for style and static checks.
+- Type checker for type safety.
+- Tests for behavior.
+- Pre-commit or CI checks for enforcement before merge.
+
+Put the human explanation in `AGENTS.md`; let automated tools enforce it mechanically.
+
+## 12. Apps, connectors, and browser/computer tools
+
+Apps and connectors give Codex authorized access to third-party workspaces, such as GitHub, Figma, Google Drive, Notion, Slack, Linear, or internal tools. They may be bundled in plugins or exposed through MCP.
+
+- Use an app/connector when the data is private and authorized access is needed.
+- Use MCP when you need local or custom tool integration.
+- Use browser/computer tools for interaction and verification when there is no more direct API or connector.
+- Check workspace or administrator policy: availability and authorization can vary by account and surface.
+
+## 13. WSL and Windows guidance
+
+If the code lives in WSL and VS Code uses Remote - WSL:
+
+- Treat WSL as the working host for the extension.
+- Put project guidance and project skills in the repository so they travel with the code.
+- Put WSL-only personal files under WSL `~/.codex` and `~/.agents`.
+- Put Windows-only personal files under Windows `%USERPROFILE%\.codex` and `%USERPROFILE%\.agents`.
+- Do not assume a global file created on Windows will automatically be visible to a Codex process running inside WSL.
+
+For cross-machine and cross-surface consistency, version-control the repository files and publish reusable team workflows as a plugin.
+
+## 14. A sensible rollout workflow
+
+1. Add a small repository `AGENTS.md` with commands, conventions, and safety boundaries.
+2. Work normally for a few tasks.
+3. When you repeat a multi-step process, create a project skill under `.agents/skills`.
+4. Move long reference material to `references/` and repeatable mechanics to tested `scripts/`.
+5. Add MCP only when the skill needs live data or external actions.
+6. Create a custom agent only for a genuinely distinct role, such as a read-only explorer, reviewer, or documentation researcher.
+7. Use subagents for independent investigation, testing, and review; avoid parallel writes unless work is isolated.
+8. Turn a proven skill/MCP/hook bundle into a plugin when it must be shared across projects or people.
+9. Keep tokens under control: keep `AGENTS.md` small, skill descriptions precise, references on-demand, and subagents limited to work that benefits from parallelism.
+
+## 15. Troubleshooting checklist
+
+### A skill does not appear or trigger
+
+- Confirm the folder is in `~/.agents/skills/<name>/` or `<repo>/.agents/skills/<name>/`.
+- Confirm the file is exactly `SKILL.md`.
+- Confirm YAML frontmatter begins and ends with `---` and has `name` plus `description`.
+- Confirm the name is lowercase kebab-case and matches the folder.
+- Start a new task or restart the relevant Codex surface.
+- If using WSL, verify the file is in the WSL filesystem, not only on Windows.
+- Make the description more explicit about triggering tasks.
+
+### Guidance seems wrong or stale
+
+- Look for `AGENTS.override.md` in Codex Home or a nearer directory.
+- Ask Codex to summarize active instructions from the current directory.
+- Check that the file is non-empty.
+- Restart the session after changing global guidance or configuration.
+
+### An MCP server is unavailable
+
+- Check that it is enabled in Settings or `config.toml`.
+- Check authentication or run its OAuth login flow.
+- Verify the server command, URL, environment variable name, and working directory.
+- Restrict dangerous tools with allow lists and approval modes.
+- Restart the app or extension after changing configuration.
+
+### A plugin does not appear
+
+- Confirm `.codex-plugin/plugin.json` exists and is valid.
+- Confirm the marketplace entry points to the intended plugin directory.
+- Restart the ChatGPT desktop app after changing a local marketplace or plugin.
+- Check workspace policy and authentication requirements.
+
+## 16. Official references
+
+- [Codex customization overview](https://learn.chatgpt.com/docs/customization/overview)
+- [Custom instructions with AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+- [Subagents and custom agents](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+- [Model Context Protocol for Codex](https://learn.chatgpt.com/docs/extend/mcp)
+- [Build plugins](https://learn.chatgpt.com/docs/build-plugins)
+
