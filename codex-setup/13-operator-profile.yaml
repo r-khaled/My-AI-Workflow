@@ -1,0 +1,32 @@
+# Describe the human or team the workflow must support. This is not a resume.
+# Focus on responsibilities, working style, gaps, and desired delegation.
+operator:
+  role_and_responsibilities: []
+  experience_level: null # Use a short description, not only junior/senior labels
+  strongest_areas: []
+  weaker_or_learning_areas: []
+  current_learning_goals: []
+  primary_pain_points: []
+  preferred_explanation_depth: null
+  preferred_interaction_style: null
+  hands_on_vs_delegated_preference: null
+  typical_working_pattern: null
+  accessibility_or_language_preferences: []
+
+decision_and_review_style:
+  decisions_reserved_for_human: []
+  decisions_the_ai_may_recommend: []
+  decisions_the_ai_may_make_within_policy: []
+  evidence_expected_before_acceptance: []
+  preferred_review_artifacts: []
+
+desired_ai_support:
+  expected_responsibilities: []
+  responsibilities_explicitly_not_delegated: []
+  areas_where_teaching_is_preferred: []
+  areas_where_direct_execution_is_preferred: []
+  acceptable_autonomy_by_environment:
+    local_development: null
+    shared_development: null
+    staging: null
+    production: null

@@ -1,7 +1,9 @@
+# Permissions describe the maximum intended scope. They do not override the
+# active sandbox, client approval mode, managed policy, or filesystem controls.
 paths_and_writes:
   allowed_paths: []
   allow_global_agents_guidance_changes: null
-  allow_global_config_changes: null
+  allow_global_config_changes: null # High-impact: require backup and explicit scope
   allow_profile_creation: null
   allow_global_agent_file_changes: null
   allow_personal_skill_file_changes: null
@@ -17,9 +19,9 @@ source_control:
   allow_local_commits: false
   allow_git_push: false
 
-# Night autonmus permisions
+# Boundaries for goals, scheduled tasks, or any run without live supervision.
 unattended_boundaries:
-  permission_mode: null
+  permission_mode: null # Record the real client setting, not the desired assumption
   allow_workspace_writes: null
   allow_home_configuration_writes: null
   allow_running_diagnostics: true
@@ -37,4 +39,3 @@ trust_and_secrets:
   trusted_project_policy: null
   secret_handling_policy: "Never store secrets in the blueprint or commit them."
   approval_gates: []
-

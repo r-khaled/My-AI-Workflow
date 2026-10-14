@@ -1,4 +1,6 @@
-# Optional. Leave lists empty when the work does not include DevOps or cloud.
+# Optional extension for DevOps, platform, cloud, and infrastructure work.
+# Describe every relevant provider/environment at a high level without account
+# IDs, secrets, private endpoints, or customer data.
 cloud_and_infrastructure:
   cloud_providers: []
   accounts_or_tenants: [] # Use aliases only in public repositories.
@@ -24,13 +26,14 @@ delivery_and_operations:
   deployment_strategy: null
   rollback_strategy: null
   backup_and_restore_strategy: null
-  cost_constraints: []
+  cost_constraints: [] # Budgets, approval thresholds, or cost-sensitive services
   compliance_or_security_constraints: []
 
 change_boundaries:
+# Safe public defaults. Enabling a capability here still does not bypass runtime
+# approvals or the mandatory stop gates in file 11.
   allow_iac_file_changes: false
   allow_non_production_deploys: false
   allow_production_deploys: false
   allow_apply_or_migrations: false
   allow_iam_dns_or_account_changes: false
-

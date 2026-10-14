@@ -1,16 +1,16 @@
 # Describe one initial setup goal. Keep product feature delivery out of this goal
 # unless it is explicitly intended and listed below.
 goal:
-  objective: null
-  operating_mode: null
-  goal_surface: null
+  objective: null # One concrete outcome for the first setup run
+  operating_mode: null # manual_first, goal_based, or another explicit mode
+  goal_surface: null # Desktop, IDE extension, CLI, cloud, or remote host
   expected_max_duration_minutes: null
   definition_of_done: []
 
 scope:
-  allowed_paths: []
-  repositories_in_scope: []
-  allowed_change_types: []
+  allowed_paths: [] # Exact writable paths; avoid broad home-directory access
+  repositories_in_scope: [] # Repositories Codex may inspect for evidence
+  allowed_change_types: [] # Examples: docs, agents, skills, config, templates
   explicitly_out_of_scope: []
 
 execution_policy:
@@ -18,5 +18,4 @@ execution_policy:
   preserve_existing_user_changes: true
   create_backups_before_global_config_changes: true
   require_plan_before_writes: true
-  require_human_approval_before_final_apply: null
-
+  require_human_approval_before_final_apply: null # Recommended: true

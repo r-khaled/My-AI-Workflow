@@ -1,3 +1,5 @@
+# A skill is justified by a repeatable method, not merely by a job title.
+# Inventory existing skills before creating, downloading, or modifying anything.
 skill_inventory:
   audit_existing_skills_first: true
   personal_skills_roots: []
@@ -12,13 +14,13 @@ skill_policy:
   preferred_skill_instruction_language: null
 
 desired_skills:
+# Duplicate this item for each repeated workflow. Use work-scenario IDs as evidence.
   - name: null
     problem_it_solves: null
-    trigger_conditions: []
+    trigger_conditions: [] # Phrases or task conditions that should activate the skill
     inputs: []
     outputs: []
     intended_agents: []
     priority: null
 
 skill_assignment_notes: []
-

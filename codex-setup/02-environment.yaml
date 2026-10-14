@@ -5,19 +5,19 @@ runtime:
   wsl_version: null
   shell: null
   projects_root: null
-  repository_storage_location: null
+  repository_storage_location: null # Linux home, Windows filesystem, or remote host
 
 codex:
-  clients_in_use: []
+  clients_in_use: [] # Desktop, IDE extension, CLI, or other verified clients
   primary_client: null
   codex_version: null
   codex_home: null
   desktop_agent_runtime: null
   integrated_terminal: null
-  configuration_sharing_strategy: null
+  configuration_sharing_strategy: null # separate, synchronized, or shared home
 
 developer_tools:
-  git: null
+  git: null # Version or unavailable; do not write only yes/no when version matters
   node: null
   python: null
   docker: null
@@ -25,4 +25,3 @@ developer_tools:
   other_tools: []
 
 known_environment_issues: []
-

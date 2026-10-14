@@ -1,0 +1,64 @@
+operator:
+  role_and_responsibilities:
+    - build and maintain small SaaS products
+    - design and operate development and staging infrastructure
+    - review architecture, security boundaries, and cloud cost
+  experience_level: "Experienced in DevOps and architecture; prefers AI assistance for implementation-heavy coding."
+  strongest_areas:
+    - AWS operations
+    - CI/CD
+    - system design
+  weaker_or_learning_areas:
+    - frontend implementation details
+    - production AI-agent evaluation
+  current_learning_goals:
+    - build reliable production agent harnesses
+  primary_pain_points:
+    - repeated setup across repositories
+    - losing architectural decisions in long chats
+  preferred_explanation_depth: "Explain consequential decisions; keep routine implementation concise."
+  preferred_interaction_style: "Challenge assumptions and separate facts from recommendations."
+  hands_on_vs_delegated_preference: "Human approves architecture; agents handle bounded implementation and validation."
+  typical_working_pattern: "Manual planning and review with controlled background implementation."
+  accessibility_or_language_preferences:
+    - technical artifacts in English
+    - conversational explanations may use Arabic
+
+decision_and_review_style:
+  decisions_reserved_for_human:
+    - production deploy
+    - data migration
+    - authentication architecture
+    - material cloud cost
+  decisions_the_ai_may_recommend:
+    - component boundaries
+    - test strategy
+    - CI improvements
+  decisions_the_ai_may_make_within_policy:
+    - small local refactors after tests
+  evidence_expected_before_acceptance:
+    - command output
+    - focused diff
+    - risk summary
+  preferred_review_artifacts:
+    - implementation plan
+    - validation report
+
+desired_ai_support:
+  expected_responsibilities:
+    - inspect repositories before proposing changes
+    - implement approved features
+    - write and run tests
+    - review diffs
+  responsibilities_explicitly_not_delegated:
+    - production changes
+    - secret management
+  areas_where_teaching_is_preferred:
+    - AI evaluation and observability
+  areas_where_direct_execution_is_preferred:
+    - repetitive tests and documentation updates
+  acceptable_autonomy_by_environment:
+    local_development: "bounded workspace writes"
+    shared_development: "plan and request approval"
+    staging: "no deploy without approval"
+    production: "read-only unless explicitly authorized"

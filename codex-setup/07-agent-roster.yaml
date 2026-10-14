@@ -1,9 +1,10 @@
-# Candidate roles are intentionally generic. Enable only roles that solve a
-# repeatable need in the actual workflow.
+# Candidate roles are examples, not a required final roster. Enable a role only
+# when one or more work scenarios justify it. Merge overlapping roles and avoid
+# multiple writers touching the same production files concurrently.
 agent_policy:
-  maximum_concurrent_agents: null
+  maximum_concurrent_agents: null # Start small; two is a common conservative value
   one_production_code_writer_at_a_time: true
-  maximum_repair_rounds: null
+  maximum_repair_rounds: null # Prevent open-ended reviewer/implementer loops
   use_read_only_for_planning_and_review: true
   agent_instructions_language: null
 
@@ -67,5 +68,4 @@ candidate_agents:
     required_skills: []
 
 additional_agent_roles: []
-project_specific_agent_policy: null
-
+project_specific_agent_policy: null # Explain when a role belongs in one repo only

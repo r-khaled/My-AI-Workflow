@@ -1,0 +1,20 @@
+# One item per source asset or coherent group of assets.
+# decision: preserve | adapt | replace | merge | drop | defer
+migration_decisions:
+  - source_asset_id: null
+    source_location_or_surface: null
+    purpose_and_observed_behavior: null
+    decision: null
+    rationale: null
+    target_surface: null
+    target_path_or_name: null
+    dependencies: []
+    conflicts_or_overlap: []
+    required_manual_steps: []
+    validation_scenarios: []
+    security_or_permission_changes: []
+    status: null # proposed | approved | implemented | validated | rejected
+
+unresolved_migration_questions: []
+unsupported_capabilities: []
+post_migration_cleanup: []

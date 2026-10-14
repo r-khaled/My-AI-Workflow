@@ -1,0 +1,24 @@
+# Representative scenarios are the strongest evidence for deciding which agents
+# and skills are useful. Add three to eight real scenarios across the workload.
+# Duplicate the complete item for each scenario.
+scenarios:
+  - id: null
+    name: null
+    frequency: null # daily, weekly, monthly, occasional
+    business_or_engineering_outcome: null
+    description: null
+    related_project_ids: []
+    typical_input: []
+    desired_output: []
+    tools_and_services_involved: []
+    current_manual_steps: []
+    recurring_pain_points: []
+    common_failure_modes: []
+    required_validation: []
+    acceptable_autonomy: null
+    human_approval_points: []
+    risk_level: null
+    candidate_agent_roles: []
+    candidate_reusable_skills: []
+    example_good_result: null
+    example_bad_result_or_anti_pattern: null

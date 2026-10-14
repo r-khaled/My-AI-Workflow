@@ -1,3 +1,4 @@
+# Checkpoints make long or quota-limited work resumable and auditable.
 checkpoints:
   enabled: true
   checkpoint_file_path: null
@@ -13,8 +14,9 @@ failure_handling:
   unavailable_model_policy: null
   invalid_skill_policy: null
   diagnostic_failure_policy: null
-  quota_or_time_limit_policy: null
+  quota_or_time_limit_policy: null # Validate, save state, report remaining work, then stop
 
+# These defaults should be preserved unless a reviewed, narrower policy replaces them.
 mandatory_stop_gates:
   - unclear_critical_requirement
   - schema_or_data_migration
@@ -26,4 +28,3 @@ mandatory_stop_gates:
   - new_paid_service_or_material_cost
   - tests_still_failing_after_repair_limit
   - major_architecture_deviation
-

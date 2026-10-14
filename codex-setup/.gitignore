@@ -1,0 +1,8 @@
+# Private filled profiles and machine-specific context
+local/
+*.private.yaml
+CONTEXT.private.md
+
+# Generated reports and configuration backups
+generated/
+backups/

@@ -1,0 +1,95 @@
+scenarios:
+  - id: feature_delivery
+    name: "Deliver a backend feature"
+    frequency: weekly
+    business_or_engineering_outcome: "Ship a reviewed, tested feature without losing architecture context."
+    description: "Plan a feature, inspect affected code, implement it, test it, and review the final diff."
+    related_project_ids:
+      - example_saas
+    typical_input:
+      - product requirement
+      - existing repository
+    desired_output:
+      - approved feature plan
+      - implementation
+      - tests
+      - validation report
+    tools_and_services_involved:
+      - Git
+      - application test runner
+    current_manual_steps:
+      - explain requirements repeatedly
+      - inspect test failures
+    recurring_pain_points:
+      - context becomes noisy
+      - review findings are not routed back to the same implementer
+    common_failure_modes:
+      - unrelated refactors
+      - incomplete validation
+    required_validation:
+      - lint
+      - typecheck
+      - tests
+      - build
+      - diff review
+    acceptable_autonomy: "Local implementation after explicit plan approval."
+    human_approval_points:
+      - architecture
+      - schema changes
+      - completion acceptance
+    risk_level: medium
+    candidate_agent_roles:
+      - architect
+      - explorer
+      - implementer_complex
+      - reviewer
+      - tester
+    candidate_reusable_skills:
+      - feature_delivery
+    example_good_result: "A focused diff with passing checks and an updated decision record."
+    example_bad_result_or_anti_pattern: "Multiple agents edit the same files and report success without test evidence."
+
+  - id: infrastructure_change
+    name: "Plan an AWS serverless change"
+    frequency: monthly
+    business_or_engineering_outcome: "Produce a safe, cost-aware infrastructure plan before any apply."
+    description: "Inspect current IaC, evaluate failure modes, and prepare implementation and rollback steps."
+    related_project_ids:
+      - example_saas
+    typical_input:
+      - architecture requirement
+      - IaC repository
+    desired_output:
+      - infrastructure plan
+      - IAM boundaries
+      - observability plan
+      - rollback steps
+    tools_and_services_involved:
+      - AWS
+      - infrastructure as code
+    current_manual_steps:
+      - inspect stacks
+      - compare deployment options
+    recurring_pain_points:
+      - implementation begins before rollback is defined
+    common_failure_modes:
+      - overly broad IAM
+      - unbounded cost
+    required_validation:
+      - IaC syntax validation
+      - least-privilege review
+      - cost and rollback review
+    acceptable_autonomy: "Planning and file changes only; no deploy or apply."
+    human_approval_points:
+      - architecture
+      - IAM
+      - deployment
+    risk_level: high
+    candidate_agent_roles:
+      - devops_planner
+      - devops_worker
+      - reviewer
+    candidate_reusable_skills:
+      - aws_serverless_change
+    example_good_result: "A declarative diff with validation commands and no environment mutation."
+    example_bad_result_or_anti_pattern: "The agent applies infrastructure while the operator is away."

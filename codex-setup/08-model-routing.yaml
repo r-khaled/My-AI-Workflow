@@ -1,4 +1,5 @@
 # List only models and reasoning levels actually available in the target client.
+# Keep product-independent defaults here. Put vendor/model examples under examples/.
 available_models: []
 available_reasoning_levels: []
 
@@ -35,20 +36,7 @@ task_routing:
     reasoning_effort: null
 
 usage_policy:
-  quality_vs_usage_priority: null
-  model_comparison_policy: null
-  unavailable_model_fallback: null
+  quality_vs_usage_priority: null # Explain where quality or quota/latency wins
+  model_comparison_policy: null # How equivalent tasks are benchmarked before switching
+  unavailable_model_fallback: null # Inherit, choose verified fallback, or stop and report
   excluded_models: []
-
-
-
-## sugested baseline 
-# default: gpt-5.6-terra / medium
-# architect: gpt-5.6-sol / high
-# reviewer: gpt-5.6-sol / high
-# routine_implementation: gpt-5.6-terra / medium
-# complex_implementation: gpt-5.6-sol / medium-or-high
-# tester: gpt-5.6-terra / medium
-# explorer: gpt-5.6-luna-or-terra / medium
-# devops_planner: gpt-5.6-sol / high
-# devops_worker: gpt-5.6-terra / medium

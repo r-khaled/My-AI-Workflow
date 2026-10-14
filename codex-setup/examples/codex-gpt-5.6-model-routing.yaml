@@ -1,0 +1,28 @@
+# Example only. Model availability and supported reasoning levels can change.
+# Verify the signed-in account and client before copying these values.
+available_models:
+  - gpt-5.6-luna
+  - gpt-5.6-terra
+  - gpt-5.6-sol
+
+global_defaults:
+  parent_model: gpt-5.6-terra
+  parent_reasoning_effort: medium
+  default_subagent_model: gpt-5.6-terra
+  default_subagent_reasoning_effort: medium
+
+task_routing:
+  architecture: { model: gpt-5.6-sol, reasoning_effort: high }
+  exploration: { model: gpt-5.6-terra, reasoning_effort: medium }
+  routine_implementation: { model: gpt-5.6-terra, reasoning_effort: medium }
+  complex_implementation: { model: gpt-5.6-sol, reasoning_effort: high }
+  review_and_security: { model: gpt-5.6-sol, reasoning_effort: high }
+  testing: { model: gpt-5.6-terra, reasoning_effort: medium }
+  devops_planning: { model: gpt-5.6-sol, reasoning_effort: high }
+  devops_implementation: { model: gpt-5.6-terra, reasoning_effort: medium }
+
+usage_policy:
+  quality_vs_usage_priority: "Use stronger models for high-impact decisions; use balanced models for routine work."
+  model_comparison_policy: "Compare equivalent tasks before changing durable defaults."
+  unavailable_model_fallback: "Use a verified available model or leave the custom agent unpinned and report the change."
+  excluded_models: []

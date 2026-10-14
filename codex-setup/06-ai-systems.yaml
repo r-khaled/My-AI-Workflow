@@ -1,10 +1,11 @@
-# Optional. Use for AI features, agents, RAG, or evaluation workflows.
+# Optional extension for products that include AI models, RAG, tool use, or
+# production agent harnesses. Describe application architecture, not Codex setup.
 ai_systems:
   active: null
   use_cases: []
   application_frameworks: []
   model_providers: []
-  model_families: []
+  model_families: [] # Models used by the product, not models used by Codex
   agent_frameworks_or_harnesses: []
   tool_calling_or_mcp: []
 
@@ -16,7 +17,7 @@ knowledge_and_memory:
   data_retention_constraints: []
 
 quality_and_safety:
-  evaluation_strategy: []
+  evaluation_strategy: [] # Offline evals, regression sets, human review, or online metrics
   guardrails: []
   tracing_and_observability: []
   human_in_the_loop_requirements: []
@@ -26,4 +27,3 @@ operations:
   deployment_target: []
   latency_or_cost_budgets: []
   known_risks: []
-

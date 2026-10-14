@@ -1,10 +1,13 @@
-# Add one item per project. Duplicate the project template as needed.
+# Add one item per project across the operator's workload, not only the project
+# currently open. Record current facts; put future preferences in file 04.
+# Required per project: id, name, path, lifecycle stage, goal, stack, commands,
+# and constraints. Duplicate the complete item for additional projects.
 projects:
   - id: null
     name: null
     repository_path: null
     repository_visibility: null
-    lifecycle_stage: null
+    lifecycle_stage: null # idea, prototype, active_development, production, maintenance
     business_domain: null
     current_milestone: null
     product_goal: null
@@ -12,7 +15,7 @@ projects:
     out_of_scope: []
 
     architecture:
-      style: null
+      style: null # modular_monolith, serverless, microservices, or actual current style
       frontend: []
       backend: []
       api_style: []
@@ -37,7 +40,6 @@ projects:
       package_manager: null
       test_tools: []
       lint_and_format_tools: []
-      build_commands: []
+      build_commands: [] # Only commands verified in this repository
       known_constraints: []
       important_risks: []
-

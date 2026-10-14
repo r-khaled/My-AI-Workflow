@@ -1,0 +1,40 @@
+# Sanitized source inventory. Never store secrets or authentication state.
+source:
+  tool_name: null
+  tool_version_or_release: null
+  operating_surfaces: []
+  export_date: null
+  export_method: null
+
+instruction_assets:
+  global_rules: []
+  project_rules: []
+  file_or_directory_specific_rules: []
+  reusable_prompts_or_commands: []
+
+agent_assets:
+  custom_agents: []
+  delegation_or_orchestration_rules: []
+  model_and_reasoning_preferences: []
+  permission_and_sandbox_behavior: []
+
+extension_assets:
+  skills_or_equivalents: []
+  mcp_servers_connectors_or_plugins: []
+  hooks_or_lifecycle_scripts: []
+  scheduled_or_recurring_automation: []
+
+context_assets:
+  persistent_memory: []
+  project_knowledge: []
+  useful_decision_records: []
+  representative_task_examples: []
+
+migration_constraints:
+  workflows_to_preserve: []
+  known_pain_points: []
+  failed_patterns_to_drop: []
+  source_specific_behavior: []
+  non_portable_assets: []
+  items_requiring_manual_authentication: []
+  items_requiring_manual_review: []

@@ -1,0 +1,29 @@
+# Complete this file for workflow audits or migrations. Leave it mostly empty
+# for a true greenfield setup. Record locations and behavior; never copy secrets.
+current_ai_workflow:
+  source_tools: []
+  primary_tool: null
+  workflow_maturity: null
+  global_instruction_files: []
+  project_instruction_files: []
+  existing_agents: []
+  existing_skills_commands_or_prompts: []
+  mcp_servers_connectors_or_plugins: []
+  hooks_or_lifecycle_automation: []
+  scheduled_or_recurring_automation: []
+  model_and_reasoning_preferences: []
+  permission_and_approval_model: null
+  memory_or_persistent_context: []
+  useful_workflows_to_preserve: []
+  current_pain_points: []
+  failed_patterns_to_avoid: []
+  obsolete_components: []
+  assets_that_must_not_be_modified: []
+
+migration_intent:
+  target_tools: []
+  outcomes_to_preserve: []
+  source_specific_behavior_to_reconsider: []
+  non_portable_components: []
+  items_requiring_manual_export: []
+  items_requiring_manual_authentication: []

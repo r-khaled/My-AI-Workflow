@@ -1,15 +1,16 @@
+# Define observable outputs. Avoid vague entries such as "complete setup".
 deliverables:
   required_outputs: []
   expected_configuration_files: []
   expected_agent_files: []
   expected_skill_files: []
   expected_project_documentation: []
-  validation_report_requirements: []
+  validation_report_requirements: [] # Syntax, diagnostics, discovery, and pilot evidence
   final_summary_path: null
   unresolved_questions_report_path: null
 
 priorities:
-  ordered_priorities: []
+  ordered_priorities: [] # Highest value first when time or quota is limited
   quality_vs_usage_preference: null
   maximum_expected_run_duration_minutes: null
   desired_behavior_near_quota_or_time_limit: null
@@ -21,4 +22,3 @@ final_report:
   include_remaining_risks_and_unverified_items: true
   include_rollout_and_rollback_notes: true
   include_next_recommended_milestone: true
-
