@@ -1,0 +1,24 @@
+skill_inventory:
+  audit_existing_skills_first: true
+  personal_skills_roots: []
+  project_skills_roots: []
+  installed_skills: []
+
+skill_policy:
+  allow_creation_of_custom_skills: null
+  allow_modification_of_third_party_skills: false
+  allow_network_skill_installation: false
+  require_validation_for_new_skills: true
+  preferred_skill_instruction_language: null
+
+desired_skills:
+  - name: null
+    problem_it_solves: null
+    trigger_conditions: []
+    inputs: []
+    outputs: []
+    intended_agents: []
+    priority: null
+
+skill_assignment_notes: []
+

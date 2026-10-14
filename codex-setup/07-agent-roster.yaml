@@ -1,0 +1,71 @@
+# Candidate roles are intentionally generic. Enable only roles that solve a
+# repeatable need in the actual workflow.
+agent_policy:
+  maximum_concurrent_agents: null
+  one_production_code_writer_at_a_time: true
+  maximum_repair_rounds: null
+  use_read_only_for_planning_and_review: true
+  agent_instructions_language: null
+
+candidate_agents:
+  - name: architect
+    enabled: null
+    scope: "requirements, architecture, trade-offs, phased delivery, and risks"
+    may_write_production_code: false
+    intended_sandbox: "read-only"
+    required_skills: []
+
+  - name: explorer
+    enabled: null
+    scope: "read-heavy repository exploration and evidence gathering"
+    may_write_production_code: false
+    intended_sandbox: "read-only"
+    required_skills: []
+
+  - name: implementer_fast
+    enabled: null
+    scope: "small, well-scoped implementation changes"
+    may_write_production_code: true
+    intended_sandbox: "workspace-write"
+    required_skills: []
+
+  - name: implementer_complex
+    enabled: null
+    scope: "multi-layer features after an approved plan"
+    may_write_production_code: true
+    intended_sandbox: "workspace-write"
+    required_skills: []
+
+  - name: reviewer
+    enabled: null
+    scope: "correctness, security, regressions, maintainability, and test gaps"
+    may_write_production_code: false
+    intended_sandbox: "read-only"
+    required_skills: []
+
+  - name: tester
+    enabled: null
+    scope: "test planning, test implementation, and validation evidence"
+    may_write_production_code: false
+    may_write_test_code: true
+    intended_sandbox: "workspace-write"
+    required_skills: []
+
+  - name: devops_planner
+    enabled: null
+    scope: "infrastructure planning, rollback, cost, reliability, and observability"
+    may_write_production_code: false
+    intended_sandbox: "read-only"
+    required_skills: []
+
+  - name: devops_worker
+    enabled: null
+    scope: "bounded declarative infrastructure and CI/CD file changes"
+    may_write_production_code: false
+    may_write_infrastructure_code: true
+    intended_sandbox: "workspace-write"
+    required_skills: []
+
+additional_agent_roles: []
+project_specific_agent_policy: null
+

@@ -1,0 +1,17 @@
+# Safe to commit. Do not add secrets or private credentials.
+blueprint:
+  template_version: "1.0"
+  title: null
+  description: null
+  audience: null
+  owner_or_team: null
+  primary_documentation_language: null
+  last_reviewed_on: null # YYYY-MM-DD
+  fill_status: "draft" # draft | partial | ready_for_review | approved
+
+usage:
+  intended_ai_clients: []
+  intended_work_modes: []
+  public_repository_safe: null
+  notes: []
+

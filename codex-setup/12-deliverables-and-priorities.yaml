@@ -1,0 +1,24 @@
+deliverables:
+  required_outputs: []
+  expected_configuration_files: []
+  expected_agent_files: []
+  expected_skill_files: []
+  expected_project_documentation: []
+  validation_report_requirements: []
+  final_summary_path: null
+  unresolved_questions_report_path: null
+
+priorities:
+  ordered_priorities: []
+  quality_vs_usage_preference: null
+  maximum_expected_run_duration_minutes: null
+  desired_behavior_near_quota_or_time_limit: null
+
+final_report:
+  include_files_changed_and_why: true
+  include_commands_run_and_results: true
+  include_validation_evidence: true
+  include_remaining_risks_and_unverified_items: true
+  include_rollout_and_rollback_notes: true
+  include_next_recommended_milestone: true
+

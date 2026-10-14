@@ -1,0 +1,43 @@
+# Add one item per project. Duplicate the project template as needed.
+projects:
+  - id: null
+    name: null
+    repository_path: null
+    repository_visibility: null
+    lifecycle_stage: null
+    business_domain: null
+    current_milestone: null
+    product_goal: null
+    in_scope: []
+    out_of_scope: []
+
+    architecture:
+      style: null
+      frontend: []
+      backend: []
+      api_style: []
+      background_processing: []
+      realtime_features: []
+
+    data:
+      databases: []
+      orm_or_data_access: []
+      cache: []
+      storage: []
+      search_or_vector_store: []
+
+    platform:
+      hosting: []
+      cloud_services: []
+      infrastructure_as_code: []
+      ci_cd: []
+      observability: []
+
+    quality:
+      package_manager: null
+      test_tools: []
+      lint_and_format_tools: []
+      build_commands: []
+      known_constraints: []
+      important_risks: []
+

@@ -1,0 +1,29 @@
+# Optional. Use for AI features, agents, RAG, or evaluation workflows.
+ai_systems:
+  active: null
+  use_cases: []
+  application_frameworks: []
+  model_providers: []
+  model_families: []
+  agent_frameworks_or_harnesses: []
+  tool_calling_or_mcp: []
+
+knowledge_and_memory:
+  rag_in_use: null
+  vector_stores: []
+  document_sources: []
+  memory_strategy: null
+  data_retention_constraints: []
+
+quality_and_safety:
+  evaluation_strategy: []
+  guardrails: []
+  tracing_and_observability: []
+  human_in_the_loop_requirements: []
+  sensitive_data_constraints: []
+
+operations:
+  deployment_target: []
+  latency_or_cost_budgets: []
+  known_risks: []
+

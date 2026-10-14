@@ -1,0 +1,22 @@
+# Describe one initial setup goal. Keep product feature delivery out of this goal
+# unless it is explicitly intended and listed below.
+goal:
+  objective: null
+  operating_mode: null
+  goal_surface: null
+  expected_max_duration_minutes: null
+  definition_of_done: []
+
+scope:
+  allowed_paths: []
+  repositories_in_scope: []
+  allowed_change_types: []
+  explicitly_out_of_scope: []
+
+execution_policy:
+  inspect_before_change: true
+  preserve_existing_user_changes: true
+  create_backups_before_global_config_changes: true
+  require_plan_before_writes: true
+  require_human_approval_before_final_apply: null
+

@@ -1,0 +1,28 @@
+# Record facts only. Leave unknown values null for the AI to inspect.
+runtime:
+  operating_system: null
+  linux_distribution: null
+  wsl_version: null
+  shell: null
+  projects_root: null
+  repository_storage_location: null
+
+codex:
+  clients_in_use: []
+  primary_client: null
+  codex_version: null
+  codex_home: null
+  desktop_agent_runtime: null
+  integrated_terminal: null
+  configuration_sharing_strategy: null
+
+developer_tools:
+  git: null
+  node: null
+  python: null
+  docker: null
+  cloud_cli_tools: []
+  other_tools: []
+
+known_environment_issues: []
+

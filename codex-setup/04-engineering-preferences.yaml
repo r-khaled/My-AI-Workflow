@@ -1,0 +1,26 @@
+engineering:
+  primary_languages: []
+  preferred_frontend_stacks: []
+  preferred_backend_stacks: []
+  preferred_databases: []
+  preferred_orms_or_data_layers: []
+  preferred_api_styles: []
+  preferred_architecture_styles: []
+
+quality:
+  type_safety_expectation: null
+  coding_style_and_naming: []
+  dependency_policy: null
+  backwards_compatibility_policy: null
+  documentation_policy: null
+  test_expectations: []
+  minimum_required_checks_before_done: []
+  definition_of_done_requirements: []
+
+git_workflow:
+  branch_strategy: null
+  commit_message_convention: null
+  allow_agent_local_commits: false
+  allow_agent_git_push: false
+  pull_request_expectations: []
+

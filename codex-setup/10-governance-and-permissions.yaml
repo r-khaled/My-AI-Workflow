@@ -1,0 +1,40 @@
+paths_and_writes:
+  allowed_paths: []
+  allow_global_agents_guidance_changes: null
+  allow_global_config_changes: null
+  allow_profile_creation: null
+  allow_global_agent_file_changes: null
+  allow_personal_skill_file_changes: null
+  allow_project_agents_guidance_changes: null
+  allow_project_config_changes: null
+  allow_project_agent_file_changes: null
+  allow_project_skill_file_changes: null
+  allow_project_documentation_changes: null
+
+source_control:
+  preserve_dirty_worktree_changes: true
+  allow_branch_creation: false
+  allow_local_commits: false
+  allow_git_push: false
+
+# Night autonmus permisions
+unattended_boundaries:
+  permission_mode: null
+  allow_workspace_writes: null
+  allow_home_configuration_writes: null
+  allow_running_diagnostics: true
+  allow_running_tests_and_builds: null
+  allow_dependency_installation: false
+  allow_dependency_updates: false
+  allow_network_access: null
+  allow_deploy: false
+  allow_database_migrations: false
+  allow_destructive_actions: false
+  allow_production_access: false
+  allow_secret_or_auth_file_changes: false
+
+trust_and_secrets:
+  trusted_project_policy: null
+  secret_handling_policy: "Never store secrets in the blueprint or commit them."
+  approval_gates: []
+

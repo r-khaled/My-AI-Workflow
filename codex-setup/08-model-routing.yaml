@@ -1,0 +1,54 @@
+# List only models and reasoning levels actually available in the target client.
+available_models: []
+available_reasoning_levels: []
+
+global_defaults:
+  parent_model: null
+  parent_reasoning_effort: null
+  default_subagent_model: null
+  default_subagent_reasoning_effort: null
+
+task_routing:
+  architecture:
+    model: null
+    reasoning_effort: null
+  exploration:
+    model: null
+    reasoning_effort: null
+  routine_implementation:
+    model: null
+    reasoning_effort: null
+  complex_implementation:
+    model: null
+    reasoning_effort: null
+  review_and_security:
+    model: null
+    reasoning_effort: null
+  testing:
+    model: null
+    reasoning_effort: null
+  devops_planning:
+    model: null
+    reasoning_effort: null
+  devops_implementation:
+    model: null
+    reasoning_effort: null
+
+usage_policy:
+  quality_vs_usage_priority: null
+  model_comparison_policy: null
+  unavailable_model_fallback: null
+  excluded_models: []
+
+
+
+## sugested baseline 
+# default: gpt-5.6-terra / medium
+# architect: gpt-5.6-sol / high
+# reviewer: gpt-5.6-sol / high
+# routine_implementation: gpt-5.6-terra / medium
+# complex_implementation: gpt-5.6-sol / medium-or-high
+# tester: gpt-5.6-terra / medium
+# explorer: gpt-5.6-luna-or-terra / medium
+# devops_planner: gpt-5.6-sol / high
+# devops_worker: gpt-5.6-terra / medium

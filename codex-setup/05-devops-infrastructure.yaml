@@ -1,0 +1,36 @@
+# Optional. Leave lists empty when the work does not include DevOps or cloud.
+cloud_and_infrastructure:
+  cloud_providers: []
+  accounts_or_tenants: [] # Use aliases only in public repositories.
+  environments: []
+  default_regions: []
+  infrastructure_as_code_tools: []
+  configuration_management_tools: []
+
+platform_components:
+  compute: []
+  containers: []
+  serverless: []
+  databases: []
+  queues_and_events: []
+  networking: []
+  dns_and_certificates: []
+  storage: []
+  secrets_management: []
+  observability: []
+
+delivery_and_operations:
+  ci_cd_platforms: []
+  deployment_strategy: null
+  rollback_strategy: null
+  backup_and_restore_strategy: null
+  cost_constraints: []
+  compliance_or_security_constraints: []
+
+change_boundaries:
+  allow_iac_file_changes: false
+  allow_non_production_deploys: false
+  allow_production_deploys: false
+  allow_apply_or_migrations: false
+  allow_iam_dns_or_account_changes: false
+
